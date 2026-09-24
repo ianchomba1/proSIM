@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, Mail, Building, Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { registerApi } from '../services/api';
 
 interface SignUpFormProps {
   onSuccess: (name: string, email: string) => void;
@@ -8,7 +9,7 @@ interface SignUpFormProps {
 export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [department, setDepartment] = useState('it_admin');
+  const [department, setDepartment] = useState('Customer');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +26,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
 
   const strength = getPasswordStrength();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -51,11 +52,15 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
 
     setIsLoading(true);
 
-    // Simulate API registration delay
-    setTimeout(() => {
-      setIsLoading(false);
-      onSuccess(fullName, email);
-    }, 1200);
+    const roleName = department === 'administrator' || department === 'Administrator' ? 'Administrator' : 'Customer';
+    const res = await registerApi(fullName, email, password, roleName);
+    setIsLoading(false);
+
+    if (res.success) {
+      onSuccess(res.user?.fullName || fullName, res.user?.email || email);
+    } else {
+      setError(res.message);
+    }
   };
 
   return (
@@ -120,11 +125,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
             disabled={isLoading}
             style={{ appearance: 'none', cursor: 'pointer' }}
           >
-            <option value="it_admin">IT & Telecom Infrastructure</option>
-            <option value="network_ops">Network Operations Center</option>
-            <option value="faculty_lead">Faculty Research Lead</option>
-            <option value="campus_security">Campus Security & Assets</option>
-            <option value="finance">Institutional Finance & Logistics</option>
+            <option value="customer">Customer</option>
+            <option value="administrator">Administrator</option>
           </select>
         </div>
       </div>

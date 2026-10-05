@@ -28,25 +28,14 @@ namespace ProSim.Api.Controllers
 
             var normalizedEmail = dto.Email.Trim().ToLowerInvariant();
 
-            // Check if email already exists in administrators table
-            var existingAdmin = await _context.Administrators.FirstOrDefaultAsync(a => a.Email.ToLower() == normalizedEmail);
-            if (existingAdmin != null)
+            // Check if email already exists in users table
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == normalizedEmail);
+            if (existingUser != null)
             {
                 return BadRequest(new AuthResponseDto
                 {
                     Success = false,
-                    Message = "An account with this email already exists in administrators."
-                });
-            }
-
-            // Check if email already exists in customers table
-            var existingCustomer = await _context.Customers.FirstOrDefaultAsync(c => c.Email.ToLower() == normalizedEmail);
-            if (existingCustomer != null)
-            {
-                return BadRequest(new AuthResponseDto
-                {
-                    Success = false,
-                    Message = "An account with this email already exists in customers."
+                    Message = "An account with this email already exists."
                 });
             }
 
@@ -54,60 +43,31 @@ namespace ProSim.Api.Controllers
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
             string role = dto.Role?.Trim().ToLowerInvariant() == "administrator" ? "Administrator" : "Customer";
 
-            if (role == "Administrator")
+            var user = new User
             {
-                var admin = new Administrator
-                {
-                    FullName = dto.FullName.Trim(),
-                    Email = normalizedEmail,
-                    PasswordHash = passwordHash,
-                    CreatedAt = DateTime.UtcNow
-                };
+                FullName = dto.FullName.Trim(),
+                Email = normalizedEmail,
+                PasswordHash = passwordHash,
+                Role = role,
+                CreatedAt = DateTime.UtcNow
+            };
 
-                _context.Administrators.Add(admin);
-                await _context.SaveChangesAsync();
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
 
-                return Ok(new AuthResponseDto
-                {
-                    Success = true,
-                    Message = "Administrator account registered successfully in administrators table.",
-                    User = new UserDto
-                    {
-                        Id = admin.Id,
-                        FullName = admin.FullName,
-                        Email = admin.Email,
-                        Role = "Administrator",
-                        CreatedAt = admin.CreatedAt
-                    }
-                });
-            }
-            else
+            return Ok(new AuthResponseDto
             {
-                var customer = new Customer
+                Success = true,
+                Message = $"Account registered successfully in users table as {role}.",
+                User = new UserDto
                 {
-                    FullName = dto.FullName.Trim(),
-                    Email = normalizedEmail,
-                    PasswordHash = passwordHash,
-                    CreatedAt = DateTime.UtcNow
-                };
-
-                _context.Customers.Add(customer);
-                await _context.SaveChangesAsync();
-
-                return Ok(new AuthResponseDto
-                {
-                    Success = true,
-                    Message = "Customer account registered successfully in customers table.",
-                    User = new UserDto
-                    {
-                        Id = customer.Id,
-                        FullName = customer.FullName,
-                        Email = customer.Email,
-                        Role = "Customer",
-                        CreatedAt = customer.CreatedAt
-                    }
-                });
-            }
+                    Id = user.Id,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    Role = user.Role,
+                    CreatedAt = user.CreatedAt
+                }
+            });
         }
 
         [HttpPost("login")]
@@ -120,40 +80,21 @@ namespace ProSim.Api.Controllers
 
             var normalizedEmail = dto.Email.Trim().ToLowerInvariant();
 
-            // 1. Search in administrators table
-            var admin = await _context.Administrators.FirstOrDefaultAsync(a => a.Email.ToLower() == normalizedEmail);
-            if (admin != null && BCrypt.Net.BCrypt.Verify(dto.Password, admin.PasswordHash))
+            // Search in users table
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == normalizedEmail);
+            if (user != null && BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             {
                 return Ok(new AuthResponseDto
                 {
                     Success = true,
-                    Message = "Administrator authentication successful.",
+                    Message = "Authentication successful.",
                     User = new UserDto
                     {
-                        Id = admin.Id,
-                        FullName = admin.FullName,
-                        Email = admin.Email,
-                        Role = "Administrator",
-                        CreatedAt = admin.CreatedAt
-                    }
-                });
-            }
-
-            // 2. Search in customers table
-            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email.ToLower() == normalizedEmail);
-            if (customer != null && BCrypt.Net.BCrypt.Verify(dto.Password, customer.PasswordHash))
-            {
-                return Ok(new AuthResponseDto
-                {
-                    Success = true,
-                    Message = "Customer authentication successful.",
-                    User = new UserDto
-                    {
-                        Id = customer.Id,
-                        FullName = customer.FullName,
-                        Email = customer.Email,
-                        Role = "Customer",
-                        CreatedAt = customer.CreatedAt
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                        Role = user.Role,
+                        CreatedAt = user.CreatedAt
                     }
                 });
             }

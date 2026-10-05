@@ -26,6 +26,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Ensure PostgreSQL database and tables exist
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ProSimDbContext>();
+    dbContext.Database.EnsureCreated();
+}
+
 app.UseCors("AllowReactApp");
 
 app.UseAuthorization();

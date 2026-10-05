@@ -10,12 +10,18 @@ namespace ProSim.Api.Data
         {
         }
 
+        public DbSet<User> Users { get; set; } = null!;
         public DbSet<Administrator> Administrators { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(u => u.Email).IsUnique();
+            });
 
             modelBuilder.Entity<Administrator>(entity =>
             {

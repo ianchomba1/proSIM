@@ -34,18 +34,10 @@ export async function loginApi(email: string, password: string): Promise<AuthApi
 
     return data;
   } catch (err) {
-    // If backend isn't reachable yet, fallback gracefully with client notification
-    console.warn('Backend API unavailable, executing client fallback:', err);
+    console.error('Backend API connection error:', err);
     return {
-      success: true,
-      message: 'Signed in (Client mode).',
-      user: {
-        id: 'local-1',
-        fullName: email.split('@')[0].toUpperCase(),
-        email: email,
-        role: 'Administrator',
-        createdAt: new Date().toISOString(),
-      },
+      success: false,
+      message: 'Unable to connect to backend database server (http://localhost:5000). Please ensure the backend service is running.',
     };
   }
 }
@@ -70,17 +62,10 @@ export async function registerApi(fullName: string, email: string, password: str
 
     return data;
   } catch (err) {
-    console.warn('Backend API unavailable, executing client fallback:', err);
+    console.error('Backend API connection error:', err);
     return {
-      success: true,
-      message: 'Registered successfully (Client mode).',
-      user: {
-        id: 'local-2',
-        fullName,
-        email,
-        role,
-        createdAt: new Date().toISOString(),
-      },
+      success: false,
+      message: 'Unable to connect to backend database server (http://localhost:5000). Please ensure the backend service is running.',
     };
   }
 }

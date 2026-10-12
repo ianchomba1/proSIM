@@ -4,6 +4,7 @@ import { SignInForm } from './components/SignInForm';
 import { SignUpForm } from './components/SignUpForm';
 import { ForgotPasswordModal } from './components/ForgotPasswordModal';
 import { DashboardView } from './components/DashboardView';
+import { SimRegistrationPortal } from './components/SimRegistrationPortal';
 import { Shield } from 'lucide-react';
 import './index.css';
 
@@ -12,14 +13,14 @@ type AuthMode = 'signin' | 'signup';
 function App() {
   const [authMode, setAuthMode] = useState<AuthMode>('signin');
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
-  const [user, setUser] = useState<{ email: string; name?: string } | null>(null);
+  const [user, setUser] = useState<{ email: string; name?: string; role?: string } | null>(null);
 
-  const handleSignInSuccess = (email: string) => {
-    setUser({ email, name: email.split('@')[0].toUpperCase() });
+  const handleSignInSuccess = (email: string, name?: string, role?: string) => {
+    setUser({ email, name: name || email.split('@')[0].toUpperCase(), role });
   };
 
-  const handleSignUpSuccess = (name: string, email: string) => {
-    setUser({ name, email });
+  const handleSignUpSuccess = (name: string, email: string, role?: string) => {
+    setUser({ name, email, role });
   };
 
   const handleSignOut = () => {
@@ -28,14 +29,23 @@ function App() {
   };
 
   if (user) {
-    return (
-      <main style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    const isAdmin = user.role?.trim().toLowerCase() === 'administrator';
+    if (isAdmin) {
+      return (
         <DashboardView 
           userEmail={user.email} 
           userName={user.name} 
           onSignOut={handleSignOut} 
         />
-      </main>
+      );
+    }
+
+    return (
+      <SimRegistrationPortal
+        userEmail={user.email}
+        userName={user.name}
+        onSignOut={handleSignOut}
+      />
     );
   }
 

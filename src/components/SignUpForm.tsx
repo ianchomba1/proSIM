@@ -3,7 +3,7 @@ import { User, Mail, Building, Lock, Eye, EyeOff, ArrowRight, AlertCircle, Check
 import { registerApi } from '../services/api';
 
 interface SignUpFormProps {
-  onSuccess: (name: string, email: string) => void;
+  onSuccess: (name: string, email: string, role?: string) => void;
 }
 
 export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
@@ -57,7 +57,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
     setIsLoading(false);
 
     if (res.success) {
-      onSuccess(res.user?.fullName || fullName, res.user?.email || email);
+      onSuccess(res.user?.fullName || fullName, res.user?.email || email, res.user?.role || roleName);
     } else {
       setError(res.message);
     }

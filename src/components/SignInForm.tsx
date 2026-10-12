@@ -3,7 +3,7 @@ import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
 import { loginApi } from '../services/api';
 
 interface SignInFormProps {
-  onSuccess: (email: string) => void;
+  onSuccess: (email: string, name?: string, role?: string) => void;
   onForgotPassword: () => void;
 }
 
@@ -40,7 +40,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onSuccess, onForgotPassw
     setIsLoading(false);
 
     if (res.success) {
-      onSuccess(res.user?.email || email);
+      onSuccess(res.user?.email || email, res.user?.fullName || email.split('@')[0], res.user?.role || 'Customer');
     } else {
       setError(res.message);
     }

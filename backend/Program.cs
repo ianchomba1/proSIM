@@ -30,6 +30,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+<<<<<<< HEAD
 // Ensure PostgreSQL tables are created
 using (var scope = app.Services.CreateScope())
 {
@@ -79,6 +80,13 @@ END $$;
     {
         logger.LogError(ex, "Failed to connect to database or create tables.");
     }
+=======
+// Ensure PostgreSQL database and tables exist
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ProSimDbContext>();
+    dbContext.Database.EnsureCreated();
+>>>>>>> 5daa5c18e442db842dc573b9a27a0c8d56286fc6
 }
 
 app.UseCors("AllowReactApp");

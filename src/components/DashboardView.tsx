@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
-import { 
-  LayoutGrid, 
-  CreditCard, 
-  Bell, 
-  TrendingUp, 
-  Settings, 
-  Radio, 
-  ShieldCheck, 
-  Search, 
-  SlidersHorizontal, 
-  Plus, 
-  MoreHorizontal, 
-  ChevronLeft, 
-  ChevronRight, 
-  ChevronDown, 
-  LogOut, 
-  X, 
-  CheckCircle2, 
+import {
+  LayoutGrid,
+  CreditCard,
+  Bell,
+  TrendingUp,
+  Settings,
+  Radio,
+  ShieldCheck,
+  Search,
+  SlidersHorizontal,
+  Plus,
+  MoreHorizontal,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  LogOut,
+  X,
   AlertCircle,
   Copy,
   Check
@@ -40,7 +39,7 @@ interface DashboardViewProps {
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
-  userEmail,
+  userEmail: _userEmail,
   userName = 'Admin',
   onSignOut
 }) => {
@@ -109,11 +108,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
   // Filtered SIMs
   const filteredSims = sims.filter((sim) => {
-    const matchesSearch = 
+    const matchesSearch =
       sim.iccid.toLowerCase().includes(searchQuery.toLowerCase()) ||
       sim.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
       sim.user.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesStatus = statusFilter === 'All' || sim.status === statusFilter;
     const matchesDept = deptFilter === 'All' || sim.dept === deptFilter;
 
@@ -216,9 +215,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             flexShrink: 0
           }}>
             {/* Avatar icon / photo placeholder */}
-            <img 
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80" 
-              alt="Admin" 
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&auto=format&fit=crop&q=80"
+              alt="Admin"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={(e) => {
                 // Fallback to stylized SVG avatar if network image is blocked
@@ -480,7 +479,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               alignItems: 'center',
               gap: '8px',
               backgroundColor: '#3b82f6',
-              hoverBackgroundColor: '#2563eb',
               color: '#ffffff',
               border: 'none',
               borderRadius: '8px',
@@ -672,7 +670,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   filteredSims.map((sim, index) => {
                     const isGreen = sim.status === 'Active';
                     const isOrange = sim.status === 'Suspended';
-                    const isRed = sim.status === 'Deactivated';
 
                     const dotColor = isGreen ? '#10b981' : isOrange ? '#f59e0b' : '#ef4444';
                     const statusBg = isGreen ? 'rgba(16, 185, 129, 0.12)' : isOrange ? 'rgba(245, 158, 11, 0.12)' : 'rgba(239, 68, 68, 0.12)';
@@ -680,7 +677,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     const statusBorder = isGreen ? 'rgba(16, 185, 129, 0.25)' : isOrange ? 'rgba(245, 158, 11, 0.25)' : 'rgba(239, 68, 68, 0.25)';
 
                     return (
-                      <tr 
+                      <tr
                         key={sim.id}
                         style={{
                           borderBottom: index < filteredSims.length - 1 ? '1px solid #141c2c' : 'none',
@@ -920,7 +917,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             {/* Pagination Controls */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <button 
+              <button
                 style={{
                   width: '32px',
                   height: '32px',
@@ -1049,7 +1046,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   Add a new SIM profile to the central inventory.
                 </p>
               </div>
-              <button 
+              <button
                 onClick={() => setIsModalOpen(false)}
                 style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}
               >

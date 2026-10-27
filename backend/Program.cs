@@ -7,10 +7,31 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+// Load the DB password from .NET user secrets however the app is started
+// (by default they only load when ASPNETCORE_ENVIRONMENT=Development).
+builder.Configuration.AddUserSecrets<Program>(optional: true);
+
 // Configure PostgreSQL with EF Core
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "Database connection string is missing. Set it with: " +
+        "dotnet user-secrets set \"ConnectionStrings:DefaultConnection\" \"Host=localhost;Port=5432;Database=pro_sim;Username=postgres;Password=...\" " +
+        "(run inside the backend folder).");
+}
 builder.Services.AddDbContext<ProSimDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+// Short-lived ID verification tokens (OCR step) are kept in memory.
+builder.Services.AddMemoryCache();
+
+// Python ML service (OCR + misuse detection)
+builder.Services.AddHttpClient("MlService", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["MlService:BaseUrl"] ?? "http://127.0.0.1:8001");
+    client.Timeout = TimeSpan.FromSeconds(60);
+});
 
 // CORS policy for React Frontend
 builder.Services.AddCors(options =>
@@ -30,7 +51,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-<<<<<<< HEAD
 // Ensure PostgreSQL tables are created
 using (var scope = app.Services.CreateScope())
 {
@@ -72,6 +92,10 @@ BEGIN
         DROP TABLE customers CASCADE;
     END IF;
 END $$;
+
+-- National ID captured and verified via OCR during SIM registration
+ALTER TABLE IF EXISTS ""Subscribers"" ADD COLUMN IF NOT EXISTS ""NationalIdNumber"" VARCHAR(20);
+ALTER TABLE IF EXISTS ""Subscribers"" ADD COLUMN IF NOT EXISTS ""IdVerifiedAt"" TIMESTAMPTZ;
 ";
         dbContext.Database.ExecuteSqlRaw(createTablesSql);
         logger.LogInformation("Database verified: 'users' table active. 'administrators' and 'customers' tables removed.");
@@ -80,13 +104,6 @@ END $$;
     {
         logger.LogError(ex, "Failed to connect to database or create tables.");
     }
-=======
-// Ensure PostgreSQL database and tables exist
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ProSimDbContext>();
-    dbContext.Database.EnsureCreated();
->>>>>>> 5daa5c18e442db842dc573b9a27a0c8d56286fc6
 }
 
 app.UseCors("AllowReactApp");

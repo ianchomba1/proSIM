@@ -60,11 +60,7 @@ namespace ProSim.Api.Controllers
             return Ok(new AuthResponseDto
             {
                 Success = true,
-<<<<<<< HEAD
                 Message = $"{role} account registered successfully in users table.",
-=======
-                Message = $"Account registered successfully in users table as {role}.",
->>>>>>> 5daa5c18e442db842dc573b9a27a0c8d56286fc6
                 User = new UserDto
                 {
                     Id = user.Id,
@@ -93,11 +89,7 @@ namespace ProSim.Api.Controllers
                 return Ok(new AuthResponseDto
                 {
                     Success = true,
-<<<<<<< HEAD
                     Message = $"{user.Role} authentication successful.",
-=======
-                    Message = "Authentication successful.",
->>>>>>> 5daa5c18e442db842dc573b9a27a0c8d56286fc6
                     User = new UserDto
                     {
                         Id = user.Id,

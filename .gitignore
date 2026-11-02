@@ -31,3 +31,8 @@ __pycache__/
 # .NET build output
 backend/bin/
 backend/obj/
+
+# ML training: raw data and trained model files (regenerate from the notebook)
+ml-training/data/
+ml-service/models/
+.ipynb_checkpoints/

@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost:5000/api";
+// Backend API root. Override with VITE_API_BASE (e.g. "/api" to go through the Vite dev proxy).
+export const API_BASE_URL: string = import.meta.env.VITE_API_BASE ?? "http://localhost:5000/api";
 
 export interface UserResponse {
   id: string;

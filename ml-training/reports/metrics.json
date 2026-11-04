@@ -1,0 +1,441 @@
+{
+  "model_version": "2026-11-04-gen-v3",
+  "evaluated_on": "251 test SIMs (22,590 SIM-days), models trained on 749 training SIMs (section 4 split). The saved models were refitted on all SIMs and have no held-out score of their own.",
+  "random_forest": {
+    "misuse_vs_normal": {
+      "precision": 0.8809,
+      "recall": 0.8414,
+      "f1": 0.8607,
+      "roc_auc": 0.9821,
+      "pr_auc": 0.9198
+    },
+    "macro_f1": 0.8643,
+    "per_class": {
+      "normal": {
+        "precision": 0.9886,
+        "recall": 0.9918,
+        "f1-score": 0.9902,
+        "test days": 21070
+      },
+      "unauthorized_sharing": {
+        "precision": 0.7457,
+        "recall": 0.7922,
+        "f1-score": 0.7683,
+        "test days": 385
+      },
+      "data_reselling": {
+        "precision": 0.8406,
+        "recall": 0.4915,
+        "f1-score": 0.6203,
+        "test days": 236
+      },
+      "ghost_usage": {
+        "precision": 0.856,
+        "recall": 0.9569,
+        "f1-score": 0.9037,
+        "test days": 348
+      },
+      "inactive_billing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "test days": 295
+      },
+      "call_abuse": {
+        "precision": 0.8519,
+        "recall": 0.5287,
+        "f1-score": 0.6525,
+        "test days": 87
+      },
+      "sim_box": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "test days": 120
+      },
+      "bulk_sms": {
+        "precision": 1.0,
+        "recall": 0.9592,
+        "f1-score": 0.9792,
+        "test days": 49
+      }
+    },
+    "tuning_cv": [
+      {
+        "max_depth": "none",
+        "min_samples_leaf": 5,
+        "macro F1 (mean)": 0.8751,
+        "macro F1 (std)": 0.03
+      },
+      {
+        "max_depth": 20,
+        "min_samples_leaf": 5,
+        "macro F1 (mean)": 0.8666,
+        "macro F1 (std)": 0.0194
+      },
+      {
+        "max_depth": "none",
+        "min_samples_leaf": 2,
+        "macro F1 (mean)": 0.8657,
+        "macro F1 (std)": 0.0332
+      },
+      {
+        "max_depth": 20,
+        "min_samples_leaf": 2,
+        "macro F1 (mean)": 0.8548,
+        "macro F1 (std)": 0.0319
+      },
+      {
+        "max_depth": 20,
+        "min_samples_leaf": 1,
+        "macro F1 (mean)": 0.8474,
+        "macro F1 (std)": 0.0328
+      },
+      {
+        "max_depth": "none",
+        "min_samples_leaf": 1,
+        "macro F1 (mean)": 0.847,
+        "macro F1 (std)": 0.0379
+      }
+    ]
+  },
+  "data_isolation_forest": {
+    "baseline": {
+      "precision": 0.5537,
+      "recall": 0.5796,
+      "f1": 0.5664,
+      "roc_auc": 0.9152,
+      "pr_auc": 0.5221
+    },
+    "improved": {
+      "precision": 0.5844,
+      "recall": 0.6559,
+      "f1": 0.6181,
+      "roc_auc": 0.9417,
+      "pr_auc": 0.6112
+    }
+  },
+  "call_sms_isolation_forest": {
+    "call/SMS misuse days flagged": 0.7031,
+    "precision (call/SMS misuse vs normal days)": 0.7004,
+    "false alarms per 1,000 normal days": 3.6545,
+    "first 2 days of call/SMS episodes flagged": 0.3061,
+    "data misuse days flagged": 0.0008,
+    "PR-AUC (call/SMS misuse vs normal)": 0.7598,
+    "days flagged: sharing": 0.0026,
+    "days flagged: reselling": 0.0,
+    "days flagged: ghost": 0.0,
+    "days flagged: inactive billing": 0.0,
+    "days flagged: call abuse": 0.6092,
+    "days flagged: SIM-box": 0.8833,
+    "days flagged: bulk SMS": 0.4286,
+    "SIMs caught: call abuse": 0.8,
+    "SIMs caught: SIM-box": 0.7778,
+    "SIMs caught: bulk SMS": 0.5714
+  },
+  "comparison": {
+    "precision": {
+      "IF baseline": 0.5537,
+      "IF improved": 0.5844,
+      "call/SMS IF (3-day avg)": 0.7016,
+      "Random Forest": 0.8809
+    },
+    "recall": {
+      "IF baseline": 0.5796,
+      "IF improved": 0.6559,
+      "call/SMS IF (3-day avg)": 0.1191,
+      "Random Forest": 0.8414
+    },
+    "f1": {
+      "IF baseline": 0.5664,
+      "IF improved": 0.6181,
+      "call/SMS IF (3-day avg)": 0.2036,
+      "Random Forest": 0.8607
+    },
+    "roc_auc": {
+      "IF baseline": 0.9152,
+      "IF improved": 0.9417,
+      "call/SMS IF (3-day avg)": 0.4438,
+      "Random Forest": 0.9821
+    },
+    "pr_auc": {
+      "IF baseline": 0.5221,
+      "IF improved": 0.6112,
+      "call/SMS IF (3-day avg)": 0.1835,
+      "Random Forest": 0.9198
+    },
+    "days flagged: normal": {
+      "IF baseline": 0.0337,
+      "IF improved": 0.0336,
+      "call/SMS IF (3-day avg)": 0.0037,
+      "Random Forest": 0.0082
+    },
+    "days flagged: sharing": {
+      "IF baseline": 0.7481,
+      "IF improved": 0.8234,
+      "call/SMS IF (3-day avg)": 0.0026,
+      "Random Forest": 0.8286
+    },
+    "days flagged: reselling": {
+      "IF baseline": 0.4322,
+      "IF improved": 0.7119,
+      "call/SMS IF (3-day avg)": 0.0,
+      "Random Forest": 0.5
+    },
+    "days flagged: ghost": {
+      "IF baseline": 0.1983,
+      "IF improved": 0.2816,
+      "call/SMS IF (3-day avg)": 0.0,
+      "Random Forest": 0.9598
+    },
+    "days flagged: inactive billing": {
+      "IF baseline": 1.0,
+      "IF improved": 0.9661,
+      "call/SMS IF (3-day avg)": 0.0,
+      "Random Forest": 1.0
+    },
+    "days flagged: call abuse": {
+      "IF baseline": 0.023,
+      "IF improved": 0.0,
+      "call/SMS IF (3-day avg)": 0.6092,
+      "Random Forest": 0.5287
+    },
+    "days flagged: SIM-box": {
+      "IF baseline": 0.8417,
+      "IF improved": 0.875,
+      "call/SMS IF (3-day avg)": 0.8833,
+      "Random Forest": 1.0
+    },
+    "days flagged: bulk SMS": {
+      "IF baseline": 0.4898,
+      "IF improved": 0.4898,
+      "call/SMS IF (3-day avg)": 0.4286,
+      "Random Forest": 0.9592
+    },
+    "days flagged: quiet normal (<50 MB)": {
+      "IF baseline": 0.0409,
+      "IF improved": 0.0439,
+      "call/SMS IF (3-day avg)": 0.0,
+      "Random Forest": 0.1053
+    },
+    "SIMs caught: sharing": {
+      "IF baseline": 1.0,
+      "IF improved": 0.9355,
+      "call/SMS IF (3-day avg)": 0.0323,
+      "Random Forest": 0.9355
+    },
+    "SIMs caught: reselling": {
+      "IF baseline": 0.88,
+      "IF improved": 0.88,
+      "call/SMS IF (3-day avg)": 0.0,
+      "Random Forest": 0.84
+    },
+    "SIMs caught: ghost": {
+      "IF baseline": 0.875,
+      "IF improved": 0.8333,
+      "call/SMS IF (3-day avg)": 0.0,
+      "Random Forest": 1.0
+    },
+    "SIMs caught: inactive billing": {
+      "IF baseline": 1.0,
+      "IF improved": 0.9375,
+      "call/SMS IF (3-day avg)": 0.0,
+      "Random Forest": 1.0
+    },
+    "SIMs caught: call abuse": {
+      "IF baseline": 0.2,
+      "IF improved": 0.0,
+      "call/SMS IF (3-day avg)": 0.8,
+      "Random Forest": 0.9
+    },
+    "SIMs caught: SIM-box": {
+      "IF baseline": 0.6667,
+      "IF improved": 0.5556,
+      "call/SMS IF (3-day avg)": 0.7778,
+      "Random Forest": 1.0
+    },
+    "SIMs caught: bulk SMS": {
+      "IF baseline": 0.7143,
+      "IF improved": 0.5714,
+      "call/SMS IF (3-day avg)": 0.5714,
+      "Random Forest": 1.0
+    },
+    "never-misused SIMs with >=1 false alarm": {
+      "IF baseline": 0.6733,
+      "IF improved": 0.34,
+      "call/SMS IF (3-day avg)": 0.0733,
+      "Random Forest": 0.3667
+    }
+  },
+  "combined_alert_levels": {
+    "High": {
+      "test days": 949,
+      "real misuse (%)": 94.5
+    },
+    "Alert": {
+      "test days": 503,
+      "real misuse (%)": 75.9
+    },
+    "Review": {
+      "test days": 112,
+      "real misuse (%)": 21.4
+    },
+    "Review (calls/SMS)": {
+      "test days": 91,
+      "real misuse (%)": 20.9
+    }
+  },
+  "combined_vs_random_forest_alone": {
+    "precision": {
+      "Random Forest alone": 0.8809,
+      "Random Forest + safety net": 0.7988,
+      "change": -0.0821
+    },
+    "recall": {
+      "Random Forest alone": 0.8414,
+      "Random Forest + safety net": 0.8697,
+      "change": 0.0283
+    },
+    "f1": {
+      "Random Forest alone": 0.8607,
+      "Random Forest + safety net": 0.8328,
+      "change": -0.0279
+    },
+    "days flagged: normal": {
+      "Random Forest alone": 0.0082,
+      "Random Forest + safety net": 0.0158,
+      "change": 0.0076
+    },
+    "days flagged: sharing": {
+      "Random Forest alone": 0.8286,
+      "Random Forest + safety net": 0.8468,
+      "change": 0.0182
+    },
+    "days flagged: reselling": {
+      "Random Forest alone": 0.5,
+      "Random Forest + safety net": 0.572,
+      "change": 0.072
+    },
+    "days flagged: ghost": {
+      "Random Forest alone": 0.9598,
+      "Random Forest + safety net": 0.9598,
+      "change": 0.0
+    },
+    "days flagged: inactive billing": {
+      "Random Forest alone": 1.0,
+      "Random Forest + safety net": 1.0,
+      "change": 0.0
+    },
+    "days flagged: call abuse": {
+      "Random Forest alone": 0.5287,
+      "Random Forest + safety net": 0.7471,
+      "change": 0.2184
+    },
+    "days flagged: SIM-box": {
+      "Random Forest alone": 1.0,
+      "Random Forest + safety net": 1.0,
+      "change": 0.0
+    },
+    "days flagged: bulk SMS": {
+      "Random Forest alone": 0.9592,
+      "Random Forest + safety net": 0.9592,
+      "change": 0.0
+    },
+    "days flagged: quiet normal (<50 MB)": {
+      "Random Forest alone": 0.1053,
+      "Random Forest + safety net": 0.1053,
+      "change": 0.0
+    },
+    "SIMs caught: sharing": {
+      "Random Forest alone": 0.9355,
+      "Random Forest + safety net": 0.9355,
+      "change": 0.0
+    },
+    "SIMs caught: reselling": {
+      "Random Forest alone": 0.84,
+      "Random Forest + safety net": 0.84,
+      "change": 0.0
+    },
+    "SIMs caught: ghost": {
+      "Random Forest alone": 1.0,
+      "Random Forest + safety net": 1.0,
+      "change": 0.0
+    },
+    "SIMs caught: inactive billing": {
+      "Random Forest alone": 1.0,
+      "Random Forest + safety net": 1.0,
+      "change": 0.0
+    },
+    "SIMs caught: call abuse": {
+      "Random Forest alone": 0.9,
+      "Random Forest + safety net": 0.9,
+      "change": 0.0
+    },
+    "SIMs caught: SIM-box": {
+      "Random Forest alone": 1.0,
+      "Random Forest + safety net": 1.0,
+      "change": 0.0
+    },
+    "SIMs caught: bulk SMS": {
+      "Random Forest alone": 1.0,
+      "Random Forest + safety net": 1.0,
+      "change": 0.0
+    },
+    "never-misused SIMs with >=1 false alarm": {
+      "Random Forest alone": 0.3667,
+      "Random Forest + safety net": 0.44,
+      "change": 0.0733
+    }
+  },
+  "unseen_type_test": {
+    "sharing": {
+      "RF (never taught it)": 0.0468,
+      "data IF alone (top 2%)": 0.3506,
+      "call/SMS IF alone (3-day avg, top 1%)": 0.0026,
+      "RF + both safety nets": 0.3636,
+      "RF when taught (6.3)": 0.8286
+    },
+    "reselling": {
+      "RF (never taught it)": 0.0127,
+      "data IF alone (top 2%)": 0.3347,
+      "call/SMS IF alone (3-day avg, top 1%)": 0.0,
+      "RF + both safety nets": 0.339,
+      "RF when taught (6.3)": 0.5
+    },
+    "ghost": {
+      "RF (never taught it)": 0.0,
+      "data IF alone (top 2%)": 0.0086,
+      "call/SMS IF alone (3-day avg, top 1%)": 0.0,
+      "RF + both safety nets": 0.0086,
+      "RF when taught (6.3)": 0.9598
+    },
+    "inactive billing": {
+      "RF (never taught it)": 0.0,
+      "data IF alone (top 2%)": 0.4136,
+      "call/SMS IF alone (3-day avg, top 1%)": 0.0,
+      "RF + both safety nets": 0.4136,
+      "RF when taught (6.3)": 1.0
+    },
+    "call abuse": {
+      "RF (never taught it)": 0.0,
+      "data IF alone (top 2%)": 0.0,
+      "call/SMS IF alone (3-day avg, top 1%)": 0.6092,
+      "RF + both safety nets": 0.6092,
+      "RF when taught (6.3)": 0.5287
+    },
+    "SIM-box": {
+      "RF (never taught it)": 0.0,
+      "data IF alone (top 2%)": 0.5917,
+      "call/SMS IF alone (3-day avg, top 1%)": 0.8833,
+      "RF + both safety nets": 0.8833,
+      "RF when taught (6.3)": 1.0
+    },
+    "bulk SMS": {
+      "RF (never taught it)": 0.0,
+      "data IF alone (top 2%)": 0.1224,
+      "call/SMS IF alone (3-day avg, top 1%)": 0.4286,
+      "RF + both safety nets": 0.4286,
+      "RF when taught (6.3)": 0.9592
+    }
+  }
+}

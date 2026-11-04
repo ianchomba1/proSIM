@@ -20,6 +20,7 @@ import {
   Copy,
   Check
 } from 'lucide-react';
+import { MisuseAlertsView } from './misuse/MisuseAlertsView';
 
 interface SimItem {
   id: string;
@@ -35,12 +36,15 @@ interface SimItem {
 interface DashboardViewProps {
   userEmail: string;
   userName?: string;
+  /** users.id of the signed-in administrator (recorded on misuse reviews). */
+  userId?: string;
   onSignOut: () => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   userEmail: _userEmail,
   userName = 'Admin',
+  userId,
   onSignOut
 }) => {
   const [activeNav, setActiveNav] = useState('inventory');
@@ -436,6 +440,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </aside>
 
       {/* MAIN VIEW CONTENT */}
+      {activeNav === 'alerts' ? (
+        <main style={{ flex: 1, padding: '36px 40px', overflowY: 'auto', minWidth: 0 }}>
+          <MisuseAlertsView reviewerId={userId} />
+        </main>
+      ) : (
       <main style={{
         flex: 1,
         padding: '36px 40px',
@@ -1008,6 +1017,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
         </div>
       </main>
+      )}
 
       {/* MODAL: Register New SIM */}
       {isModalOpen && (

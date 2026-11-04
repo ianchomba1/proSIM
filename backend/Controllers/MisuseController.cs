@@ -124,8 +124,11 @@ namespace ProSim.Api.Controllers
             if (to is null) return Ok(new { from, to, total = 0, items = Array.Empty<MisuseCaseDto>() });
             from ??= to.Value.AddDays(-29);
 
+            // Read 90 extra days before the window so a case that started earlier shows its full span;
+            // only cases that reach into the window are returned.
+            var readFrom = from.Value.AddDays(-90);
             var alerts = await _db.MisuseAlerts.AsNoTracking()
-                .Where(a => a.AlertDate >= from && a.AlertDate <= to)
+                .Where(a => a.AlertDate >= readFrom && a.AlertDate <= to)
                 .OrderBy(a => a.SimRef).ThenBy(a => a.AlertDate)
                 .ToListAsync(ct);
 
@@ -145,7 +148,7 @@ namespace ProSim.Api.Controllers
                 if (current.Count > 0) cases.Add(ToCase(current));
             }
 
-            IEnumerable<MisuseCaseDto> result = cases;
+            IEnumerable<MisuseCaseDto> result = cases.Where(c => c.EndDate >= from);
             if (!string.IsNullOrWhiteSpace(status)) result = result.Where(c => c.Status == status);
             if (!string.IsNullOrWhiteSpace(level)) result = result.Where(c => c.AlertLevel == level);
             if (!string.IsNullOrWhiteSpace(type)) result = result.Where(c => c.MisuseTypes.Contains(type));

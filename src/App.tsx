@@ -13,14 +13,14 @@ type AuthMode = 'signin' | 'signup';
 function App() {
   const [authMode, setAuthMode] = useState<AuthMode>('signin');
   const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
-  const [user, setUser] = useState<{ email: string; name?: string; role?: string } | null>(null);
+  const [user, setUser] = useState<{ email: string; name?: string; role?: string; id?: string } | null>(null);
 
-  const handleSignInSuccess = (email: string, name?: string, role?: string) => {
-    setUser({ email, name: name || email.split('@')[0].toUpperCase(), role });
+  const handleSignInSuccess = (email: string, name?: string, role?: string, id?: string) => {
+    setUser({ email, name: name || email.split('@')[0].toUpperCase(), role, id });
   };
 
-  const handleSignUpSuccess = (name: string, email: string, role?: string) => {
-    setUser({ name, email, role });
+  const handleSignUpSuccess = (name: string, email: string, role?: string, id?: string) => {
+    setUser({ name, email, role, id });
   };
 
   const handleSignOut = () => {
@@ -35,6 +35,7 @@ function App() {
         <DashboardView 
           userEmail={user.email} 
           userName={user.name} 
+          userId={user.id}
           onSignOut={handleSignOut} 
         />
       );

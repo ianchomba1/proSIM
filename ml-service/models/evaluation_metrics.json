@@ -1,0 +1,71 @@
+{
+  "model_version": "2026-11-08-gen-v4",
+  "evaluated_on": "251 test SIMs (22,590 SIM-days), models trained on 749 training SIMs (section 4 split). The saved models were refitted on all SIMs and have no held-out score of their own.",
+  "misuse_vs_normal": {
+    "precision": 0.8534,
+    "recall": 0.8237,
+    "f1": 0.8383
+  },
+  "per_misuse_type": {
+    "unauthorized_sharing": {
+      "precision": 0.7157,
+      "recall": 0.7714,
+      "f1-score": 0.7425,
+      "test days": 385
+    },
+    "data_reselling": {
+      "precision": 0.8333,
+      "recall": 0.3814,
+      "f1-score": 0.5233,
+      "test days": 236
+    },
+    "ghost_usage": {
+      "precision": 0.7669,
+      "recall": 0.9454,
+      "f1-score": 0.8468,
+      "test days": 348
+    },
+    "inactive_billing": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "test days": 295
+    },
+    "call_abuse": {
+      "precision": 0.9057,
+      "recall": 0.5517,
+      "f1-score": 0.6857,
+      "test days": 87
+    },
+    "sim_box": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "test days": 120
+    },
+    "bulk_sms": {
+      "precision": 1.0,
+      "recall": 0.9592,
+      "f1-score": 0.9792,
+      "test days": 49
+    }
+  },
+  "alert_levels": {
+    "High": {
+      "test days": 895,
+      "real misuse (%)": 94.6
+    },
+    "Alert": {
+      "test days": 572,
+      "real misuse (%)": 70.8
+    },
+    "Review": {
+      "test days": 146,
+      "real misuse (%)": 17.8
+    },
+    "Review (calls/SMS)": {
+      "test days": 85,
+      "real misuse (%)": 10.6
+    }
+  }
+}

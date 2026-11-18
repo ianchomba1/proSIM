@@ -1,0 +1,1101 @@
+/* ==========================================================================
+   ProSIM Royal Blue Theme (Source Network / Ramotion Inspired)
+   Dual-Theme Engine: Minimalist Light Mode & Precision Dark Mode
+   Comfortable Premium Sans Typography (Plus Jakarta Sans + Inter)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+/* Dark Theme (Baseline) */
+:root,
+.ps-page[data-theme="dark"] {
+  --ps-bg: #07090c;
+  --ps-bg-card: #0c1017;
+  --ps-bg-card-hover: #101620;
+  --ps-bg-surface-inner: #080b10;
+  --ps-green: #2563EB;
+  --ps-green-text: #2563EB;
+  --ps-green-hover: #3b82f6;
+  --ps-green-dim: rgba(37, 99, 235, 0.08);
+  --ps-green-dim-hover: rgba(37, 99, 235, 0.16);
+  --ps-green-border: rgba(37, 99, 235, 0.18);
+  --ps-green-border-glow: rgba(37, 99, 235, 0.45);
+  --ps-green-glow: rgba(37, 99, 235, 0.25);
+  --ps-grid-line: rgba(37, 99, 235, 0.05);
+  --ps-text-white: #ffffff;
+  --ps-text-subtle: #94a3b8;
+  --ps-text-dim: #64748b;
+  --ps-nav-bg: rgba(7, 9, 12, 0.75);
+  --ps-nav-pill-color: #e2e8f0;
+  --ps-card-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.8);
+  --ps-btn-primary-bg: #2563EB;
+  --ps-btn-primary-text: #ffffff;
+  --ps-btn-climax-bg: #07090c;
+  --ps-btn-climax-text: #ffffff;
+  --ps-climax-bg: linear-gradient(135deg, #ffffff 0%, #f8fafc 60%, #e2e8f0 100%);
+  --ps-climax-text: #07090c;
+  --ps-climax-desc: #475569;
+  --ps-footer-bg: #05070a;
+  --ps-vector-sphere-stroke: rgba(37, 99, 235, 0.35);
+  --ps-vector-node: #2563EB;
+  --ps-font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --ps-font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Light Theme */
+.ps-page[data-theme="light"] {
+  --ps-bg: #f8fafc;
+  --ps-bg-card: #ffffff;
+  --ps-bg-card-hover: #ffffff;
+  --ps-bg-surface-inner: #f1f5f9;
+  --ps-green: #1d4ed8;
+  --ps-green-text: #1d4ed8;
+  --ps-green-hover: #1e40af;
+  --ps-green-dim: rgba(29, 78, 216, 0.08);
+  --ps-green-dim-hover: rgba(29, 78, 216, 0.16);
+  --ps-green-border: rgba(29, 78, 216, 0.18);
+  --ps-green-border-glow: rgba(29, 78, 216, 0.4);
+  --ps-green-glow: rgba(29, 78, 216, 0.12);
+  --ps-grid-line: rgba(29, 78, 216, 0.06);
+  --ps-text-white: #0f172a;
+  --ps-text-subtle: #475569;
+  --ps-text-dim: #64748b;
+  --ps-nav-bg: rgba(248, 250, 252, 0.82);
+  --ps-nav-pill-color: #1e3a8a;
+  --ps-card-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.06);
+  --ps-btn-primary-bg: #2563EB;
+  --ps-btn-primary-text: #ffffff;
+  --ps-btn-climax-bg: #2563EB;
+  --ps-btn-climax-text: #ffffff;
+  --ps-climax-bg: linear-gradient(135deg, #0f172a 0%, #0c1529 100%);
+  --ps-climax-text: #ffffff;
+  --ps-climax-desc: #cbd5e1;
+  --ps-footer-bg: #f1f5f9;
+  --ps-vector-sphere-stroke: rgba(29, 78, 216, 0.35);
+  --ps-vector-node: #1d4ed8;
+}
+
+.ps-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.ps-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--ps-bg);
+  color: var(--ps-text-white);
+  font-family: var(--ps-font-body);
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Blue grid lines matching the visual identity */
+  background-image: 
+    linear-gradient(to right, var(--ps-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--ps-grid-line) 1px, transparent 1px);
+  background-size: 54px 54px;
+}
+
+/* Subtle Ambient Lighting */
+.ps-ambient-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: 0;
+}
+
+.ps-glow-hero {
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(circle, var(--ps-green-glow) 0%, transparent 70%);
+}
+
+.ps-glow-middle {
+  top: 1100px;
+  right: 10%;
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, var(--ps-green-glow) 0%, transparent 70%);
+}
+
+/* ==========================================================================
+   Navigation Bar (Transparent with background blur stuck at top)
+   ========================================================================== */
+.ps-navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  background: var(--ps-nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--ps-green-border);
+  transition: all 0.25s ease;
+}
+
+.ps-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 74px;
+}
+
+.ps-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ps-brand-emblem {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-green-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.ps-brand-title {
+  font-family: var(--ps-font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ps-text-white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ps-brand-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ps-green-text);
+  box-shadow: 0 0 8px var(--ps-green-text);
+}
+
+/* Navbar Pills with subtle green background */
+.ps-nav-pills {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ps-nav-pill {
+  font-family: var(--ps-font-body);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--ps-nav-pill-color);
+  text-decoration: none;
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  padding: 7px 18px;
+  border-radius: 9999px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.ps-nav-pill:hover {
+  background: var(--ps-green-dim-hover);
+  border-color: var(--ps-green-border-glow);
+  transform: translateY(-1px);
+}
+
+.ps-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Theme Toggle Pill Button */
+.ps-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  color: var(--ps-text-white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ps-theme-toggle:hover {
+  background: var(--ps-green-dim-hover);
+  border-color: var(--ps-green-border-glow);
+  transform: translateY(-1px);
+}
+
+.ps-btn-ghost-pill {
+  font-family: var(--ps-font-body);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--ps-text-subtle);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ps-btn-ghost-pill:hover {
+  color: var(--ps-text-white);
+  background: var(--ps-green-dim);
+  border-color: var(--ps-green-border);
+}
+
+/* Primary Vibrant Green Action Pill */
+.ps-btn-primary-pill {
+  font-family: var(--ps-font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: var(--ps-btn-primary-bg);
+  color: var(--ps-btn-primary-text);
+  border: 1px solid var(--ps-btn-primary-bg);
+  padding: 9px 22px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+}
+
+.ps-btn-primary-pill:hover {
+  background: var(--ps-green-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(37, 99, 235, 0.4);
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.ps-hero {
+  position: relative;
+  z-index: 1;
+  padding: 90px 0 100px;
+  border-bottom: 1px solid var(--ps-green-border);
+}
+
+.ps-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  color: var(--ps-green-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.ps-badge-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ps-green-text);
+  box-shadow: 0 0 8px var(--ps-green-text);
+  animation: psPulse 2s infinite ease-in-out;
+}
+
+@keyframes psPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.ps-hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.ps-hero-title {
+  font-family: var(--ps-font-display);
+  font-size: 3.8rem;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--ps-text-white);
+  margin-bottom: 24px;
+}
+
+.ps-green-highlight {
+  color: var(--ps-green-text);
+}
+
+.ps-cursor-blink {
+  color: var(--ps-green-text);
+  font-weight: 300;
+  animation: psBlink 1s infinite;
+}
+
+@keyframes psBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.ps-hero-desc {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: var(--ps-text-subtle);
+  max-width: 540px;
+  margin-bottom: 38px;
+}
+
+.ps-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 44px;
+  flex-wrap: wrap;
+}
+
+.ps-btn-large {
+  padding: 14px 30px;
+  font-size: 0.98rem;
+}
+
+.ps-btn-outline-pill {
+  font-family: var(--ps-font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ps-text-white);
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  padding: 13px 26px;
+  border-radius: 9999px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.ps-btn-outline-pill:hover {
+  background: var(--ps-green-dim-hover);
+  border-color: var(--ps-green-border-glow);
+  transform: translateY(-1px);
+}
+
+/* Metrics Bar */
+.ps-hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-top: 28px;
+  border-top: 1px solid var(--ps-green-border);
+}
+
+.ps-metric-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.ps-metric-val {
+  font-family: var(--ps-font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ps-text-white);
+  letter-spacing: -0.03em;
+}
+
+.ps-metric-lbl {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ps-text-dim);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Hero Showcase Card (capability selector + illustration)
+   ========================================================================== */
+.ps-showcase-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 20px;
+  padding: 24px;
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 18px;
+  box-shadow: var(--ps-card-shadow);
+  transition: all 0.3s ease;
+}
+
+.ps-caps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ps-cap-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ps-text-subtle);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ps-cap-item:hover {
+  color: var(--ps-text-white);
+  background: var(--ps-green-dim);
+}
+
+.ps-cap-item.active {
+  color: var(--ps-text-white);
+  background: var(--ps-green-dim);
+  border-color: var(--ps-green-border);
+}
+
+.ps-cap-item.active .ps-cap-icon {
+  color: var(--ps-green-text);
+}
+
+.ps-cap-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ps-cap-icon {
+  color: var(--ps-text-dim);
+  transition: color 0.2s ease;
+}
+
+.ps-cap-display {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  background: var(--ps-bg-surface-inner);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.ps-vector-wrap {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ps-vector-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ps-cap-content {
+  margin-top: 14px;
+}
+
+.ps-cap-title {
+  font-family: var(--ps-font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ps-text-white);
+  margin-bottom: 6px;
+}
+
+.ps-cap-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ps-text-subtle);
+}
+
+.ps-cap-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--ps-green-text);
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+}
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+.ps-section {
+  padding: 100px 0;
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid var(--ps-green-border);
+}
+
+.ps-section-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 60px;
+}
+
+.ps-section-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ps-green-text);
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  padding: 4px 14px;
+  border-radius: 9999px;
+  margin-bottom: 16px;
+}
+
+.ps-section-title {
+  font-family: var(--ps-font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--ps-text-white);
+  line-height: 1.18;
+  margin-bottom: 16px;
+}
+
+.ps-section-desc {
+  font-size: 1.1rem;
+  color: var(--ps-text-subtle);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   3-Step Workflow Cards
+   ========================================================================== */
+.ps-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ps-step-card {
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 16px;
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  position: relative;
+  box-shadow: var(--ps-card-shadow);
+}
+
+.ps-step-card:hover {
+  border-color: var(--ps-green-border-glow);
+  background: var(--ps-bg-card-hover);
+  transform: translateY(-3px);
+}
+
+.ps-step-num {
+  font-family: var(--ps-font-display);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--ps-green-text);
+  margin-bottom: 20px;
+}
+
+.ps-step-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ps-green-text);
+  margin-bottom: 22px;
+}
+
+.ps-step-title {
+  font-family: var(--ps-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ps-text-white);
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+
+.ps-step-desc {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--ps-text-subtle);
+  flex-grow: 1;
+}
+
+/* ==========================================================================
+   Feature Bento Grid
+   ========================================================================== */
+.ps-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.ps-bento-card {
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: all 0.25s ease;
+  position: relative;
+  box-shadow: var(--ps-card-shadow);
+}
+
+.ps-bento-card:hover {
+  border-color: var(--ps-green-border-glow);
+  background: var(--ps-bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.ps-bento-2col {
+  grid-column: span 2;
+}
+
+.ps-bento-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ps-green-text);
+  margin-bottom: 20px;
+}
+
+.ps-bento-title {
+  font-family: var(--ps-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ps-text-white);
+  margin-bottom: 10px;
+}
+
+.ps-bento-desc {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--ps-text-subtle);
+}
+
+.ps-bento-strip {
+  margin-top: 22px;
+  background: var(--ps-bg-surface-inner);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.ps-strip-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.ps-strip-lbl {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--ps-text-dim);
+  margin-bottom: 4px;
+}
+
+.ps-strip-val {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ps-text-white);
+}
+
+/* ==========================================================================
+   Interactive Resolver Simulator
+   ========================================================================== */
+.ps-simulator-box {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 36px;
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 18px;
+  box-shadow: var(--ps-card-shadow);
+}
+
+.ps-sim-input-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.ps-sim-field {
+  flex: 1;
+  padding: 14px 22px;
+  border-radius: 9999px;
+  background: var(--ps-bg-surface-inner);
+  border: 1px solid var(--ps-green-border);
+  font-family: var(--ps-font-body);
+  font-size: 0.95rem;
+  color: var(--ps-text-white);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.ps-sim-field:focus {
+  border-color: var(--ps-green);
+  box-shadow: 0 0 0 2px var(--ps-green-dim);
+}
+
+.ps-sim-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 22px;
+  background: var(--ps-bg-surface-inner);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 12px;
+}
+
+.ps-res-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.ps-res-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--ps-text-dim);
+  margin-bottom: 4px;
+}
+
+.ps-res-data {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ps-text-white);
+}
+
+/* ==========================================================================
+   FAQ Accordion
+   ========================================================================== */
+.ps-faq-list {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ps-faq-item {
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 12px;
+  box-shadow: var(--ps-card-shadow);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.ps-faq-item:hover {
+  border-color: var(--ps-green-border-glow);
+}
+
+.ps-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: transparent;
+  border: none;
+  color: var(--ps-text-white);
+  font-family: var(--ps-font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ps-faq-answer {
+  padding: 0 24px 22px;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ps-text-subtle);
+}
+
+/* ==========================================================================
+   Climax Banner
+   ========================================================================== */
+.ps-climax-section {
+  position: relative;
+  z-index: 1;
+  padding: 90px 0 120px;
+}
+
+.ps-climax-card {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 60px 52px;
+  border-radius: 20px;
+  background: var(--ps-climax-bg);
+  color: var(--ps-climax-text);
+  box-shadow: var(--ps-card-shadow);
+  transition: all 0.3s ease;
+}
+
+.ps-climax-tag {
+  display: inline-block;
+  font-family: var(--ps-font-display);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ps-green-text);
+  background: var(--ps-green-dim);
+  border: 1px solid var(--ps-green-border);
+  padding: 4px 14px;
+  border-radius: 9999px;
+  margin-bottom: 16px;
+}
+
+.ps-climax-title {
+  font-family: var(--ps-font-display);
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  color: var(--ps-climax-text);
+  margin-bottom: 14px;
+}
+
+.ps-climax-desc {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--ps-climax-desc);
+  max-width: 580px;
+}
+
+.ps-btn-climax-dark {
+  font-family: var(--ps-font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: var(--ps-btn-climax-bg);
+  color: var(--ps-btn-climax-text);
+  border: 1px solid var(--ps-btn-climax-bg);
+  padding: 16px 36px;
+  border-radius: 9999px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.ps-btn-climax-dark:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.ps-footer {
+  border-top: 1px solid var(--ps-green-border);
+  padding: 60px 0 36px;
+  background: var(--ps-footer-bg);
+  transition: background-color 0.3s ease;
+}
+
+.ps-footer-grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.ps-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ps-footer-head {
+  font-family: var(--ps-font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ps-text-white);
+}
+
+.ps-footer-link {
+  font-size: 0.86rem;
+  color: var(--ps-text-dim);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.ps-footer-link:hover {
+  color: var(--ps-green-text);
+}
+
+.ps-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 30px;
+  border-top: 1px solid var(--ps-green-border);
+  font-size: 0.8rem;
+  color: var(--ps-text-dim);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Four cards per row in the step-card layout (The Problem, How ProSIM Works) */
+.ps-steps-grid.ps-steps-4 {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .ps-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+  .ps-hero-title {
+    font-size: 3rem;
+  }
+  .ps-showcase-card {
+    grid-template-columns: 1fr;
+  }
+  .ps-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .ps-bento-2col {
+    grid-column: span 1;
+  }
+  .ps-steps-grid.ps-steps-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ps-climax-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 44px 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ps-nav-pills {
+    display: none;
+  }
+  .ps-hero-title {
+    font-size: 2.4rem;
+  }
+  .ps-hero-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ps-steps-grid,
+  .ps-steps-grid.ps-steps-4 {
+    grid-template-columns: 1fr;
+  }
+  .ps-sim-input-row {
+    flex-direction: column;
+  }
+  .ps-sim-results {
+    grid-template-columns: 1fr;
+  }
+  .ps-climax-title {
+    font-size: 2rem;
+  }
+  .ps-btn-ghost-pill,
+  .ps-btn-primary-pill {
+    white-space: nowrap;
+  }
+}
+
+/* Phones: keep the top bar on one line (the hero already has a large Get Started button) */
+@media (max-width: 480px) {
+  .ps-container {
+    padding: 0 16px;
+  }
+  .ps-nav-inner {
+    height: 64px;
+  }
+  .ps-nav-actions {
+    gap: 6px;
+  }
+  .ps-nav-actions > .ps-btn-primary-pill {
+    display: none;
+  }
+  .ps-btn-ghost-pill {
+    padding: 8px 12px;
+    border-color: var(--ps-green-border);
+  }
+  .ps-hero {
+    padding: 56px 0 64px;
+  }
+  .ps-hero-title {
+    font-size: 2.1rem;
+  }
+  .ps-hero-actions .ps-btn-primary-pill,
+  .ps-hero-actions .ps-btn-outline-pill {
+    width: 100%;
+    justify-content: center;
+  }
+  .ps-section {
+    padding: 64px 0;
+  }
+  .ps-section-title {
+    font-size: 1.9rem;
+  }
+  .ps-showcase-card,
+  .ps-climax-card {
+    padding: 18px;
+  }
+}

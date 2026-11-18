@@ -5,6 +5,7 @@ import {
   type AlertLevel, type MisuseCase, type ReviewStatus, type SimMisuseDetail,
 } from '../../services/misuseApi';
 import { UsageChart } from './UsageChart';
+import { useIsMobile } from '../../hooks/useMediaQuery';
 import { LevelBadge, StatusBadge } from './MisuseBadges';
 import {
   C, LEVEL_STYLE, buttonStyle, cardStyle, formatCount, formatDay, formatMb, formatPct, formatPeriod,
@@ -28,6 +29,7 @@ export const MisuseCaseDetail: React.FC<Props> = ({ misuseCase, reviewerId, onBa
   const [detail, setDetail] = useState<SimMisuseDetail | null>(null);
   const [error, setError] = useState('');
   const [reloadKey, setReloadKey] = useState(0);
+  const isMobile = useIsMobile();
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [note, setNote] = useState('');
   const [saving, setSaving] = useState<ReviewStatus | null>(null);
@@ -145,7 +147,7 @@ export const MisuseCaseDetail: React.FC<Props> = ({ misuseCase, reviewerId, onBa
         )}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(280px, 1fr)', gap: '20px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'minmax(0, 1fr)' : 'minmax(0, 2fr) minmax(280px, 1fr)', gap: '20px', alignItems: 'start' }}>
         {/* Alert days in this case */}
         <div style={{ ...cardStyle, overflow: 'hidden' }}>
           <div style={{ padding: '16px 20px', borderBottom: `1px solid ${C.rowBorder}` }}>

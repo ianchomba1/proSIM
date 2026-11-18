@@ -77,3 +77,4 @@ class ModelInfo(BaseModel):
     smooth_window_days: int
     alert_rules: list[dict]
     history_needed_to_score_one_day: str
+    test_results: dict | None = None   # from evaluation_metrics.json (notebook 01); None if not saved

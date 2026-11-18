@@ -179,7 +179,7 @@ namespace ProSim.Api.Controllers
                 .Where(a => a.SimRef == simRef).OrderBy(a => a.AlertDate).ToListAsync(ct);
             var sub = await (from s in _db.SimCards
                              join ra in _db.RegistrationApplications on s.SimCardId equals ra.SimCardId
-                             join sb in _db.Subscribers on ra.SubscriberId equals sb.SubscriberId
+                             join sb in _db.Subscribers on ra.SubscriberId equals (Guid?)sb.SubscriberId
                              where s.Phone == simRef || s.Iccid == simRef
                              select new { sb.FullName, sb.Department }).FirstOrDefaultAsync(ct);
 

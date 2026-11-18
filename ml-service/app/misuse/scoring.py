@@ -99,7 +99,18 @@ def model_info() -> dict:
         "smooth_window_days": m["data_isolation_forest"]["smooth_window_days"],
         "alert_rules": meta["alert_rules"],
         "history_needed_to_score_one_day": meta["history_needed_to_score_one_day"],
+        "test_results": _test_results(meta["model_version"]),
     }
+
+
+def _test_results(model_version: str, models_dir: Path = MODELS_DIR) -> dict | None:
+    """Held-out test metrics saved by notebook 01, only if they belong to the loaded model."""
+    path = models_dir / "evaluation_metrics.json"
+    try:
+        results = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return results if results.get("model_version") == model_version else None
 
 
 def _smooth(scores: np.ndarray, sim: np.ndarray, date: np.ndarray, window: int) -> np.ndarray:

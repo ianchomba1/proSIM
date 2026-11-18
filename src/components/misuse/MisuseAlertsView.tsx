@@ -135,7 +135,7 @@ export const MisuseAlertsView: React.FC<Props> = ({ reviewerId }) => {
       </div>
 
       {/* Summary tiles: open alert days by level */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '14px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(190px, 100%), 1fr))', gap: '14px' }}>
         {ALERT_LEVELS.map((l) => {
           const s = LEVEL_STYLE[l];
           const active = level === l;

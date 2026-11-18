@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProSim.Api.Models
 {
+    /// <summary>
+    /// A customer's SIM application. While Pending it holds the applicant's (OCR-verified) details itself;
+    /// only when an administrator approves it are a Subscriber and a SimCard created and linked.
+    /// </summary>
     [Table("RegistrationApplications")]
     public class RegistrationApplication
     {
@@ -11,13 +15,15 @@ namespace ProSim.Api.Models
         [Column("ApplicationId")]
         public Guid ApplicationId { get; set; } = Guid.NewGuid();
 
-        [Required]
+        /// <summary>Set when the application is approved (older applications were linked at submission).</summary>
         [Column("SubscriberId")]
-        public Guid SubscriberId { get; set; }
+        public Guid? SubscriberId { get; set; }
 
+        /// <summary>Set when the application is approved and the SIM card is issued.</summary>
         [Column("SimCardId")]
         public Guid? SimCardId { get; set; }
 
+        /// <summary>Pending, Approved or Rejected.</summary>
         [Required]
         [MaxLength(50)]
         [Column("ApplicationStatus")]
@@ -34,6 +40,42 @@ namespace ProSim.Api.Models
 
         [Column("Remarks")]
         public string? Remarks { get; set; }
+
+        /// <summary>The staff-list entry of the applicant (matched on staff number at submission).</summary>
+        [Column("EmployeeId")]
+        public Guid? EmployeeId { get; set; }
+
+        // ---- Applicant details, captured at submission (after National ID verification) ----
+
+        [Column("ApplicantUserId")]
+        public Guid? ApplicantUserId { get; set; }
+
+        [MaxLength(150)]
+        [Column("ApplicantFullName")]
+        public string? ApplicantFullName { get; set; }
+
+        [MaxLength(100)]
+        [Column("ApplicantInstitutionalId")]
+        public string? ApplicantInstitutionalId { get; set; }
+
+        [MaxLength(20)]
+        [Column("ApplicantNationalIdNumber")]
+        public string? ApplicantNationalIdNumber { get; set; }
+
+        [Column("ApplicantIdVerifiedAt")]
+        public DateTime? ApplicantIdVerifiedAt { get; set; }
+
+        [MaxLength(50)]
+        [Column("ApplicantDateOfBirth")]
+        public string? ApplicantDateOfBirth { get; set; }
+
+        [MaxLength(100)]
+        [Column("ApplicantDepartment")]
+        public string? ApplicantDepartment { get; set; }
+
+        [MaxLength(50)]
+        [Column("ApplicantContactPhone")]
+        public string? ApplicantContactPhone { get; set; }
 
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

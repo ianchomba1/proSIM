@@ -30,29 +30,29 @@ export const STATUS_STYLE: Record<ReviewStatus, { color: string; Icon: LucideIco
 };
 
 export const C = {
-  page: '#090d16',
-  card: '#0c121e',
-  cardBorder: '#1a253a',
-  headRow: '#080d17',
-  rowBorder: '#141c2c',
-  text: '#ffffff',
-  textSoft: '#cbd5e1',
-  muted: '#8c9cb0',
-  faint: '#64748b',
-  accent: '#3b82f6',
-  accentSoft: '#60a5fa',
+  page: 'var(--bg-dark)',
+  card: 'var(--card-bg)',
+  cardBorder: 'var(--card-border)',
+  headRow: 'var(--card-bg-elevated)',
+  rowBorder: 'var(--card-border)',
+  text: 'var(--text-primary)',
+  textSoft: 'var(--text-secondary)',
+  muted: 'var(--text-muted)',
+  faint: 'var(--text-muted)',
+  accent: 'var(--accent-green)',
+  accentSoft: 'var(--accent-green)',
 };
 
 export const cardStyle: React.CSSProperties = {
   backgroundColor: C.card,
   border: `1px solid ${C.cardBorder}`,
   borderRadius: '12px',
-  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
+  boxShadow: 'var(--card-shadow, 0 8px 24px rgba(0, 0, 0, 0.4))',
 };
 
 export const selectStyle: React.CSSProperties = {
-  backgroundColor: C.card,
-  border: '1px solid #1a2538',
+  backgroundColor: 'var(--input-bg, var(--card-bg))',
+  border: '1px solid var(--input-border, var(--card-border))',
   borderRadius: '8px',
   padding: '9px 14px',
   color: C.textSoft,
@@ -65,17 +65,18 @@ export const buttonStyle = (kind: 'primary' | 'secondary' | 'danger' | 'success'
   display: 'inline-flex',
   alignItems: 'center',
   gap: '8px',
-  borderRadius: '8px',
+  borderRadius: '9999px',
   padding: '9px 16px',
   fontSize: '13.5px',
   fontWeight: 600,
   cursor: disabled ? 'not-allowed' : 'pointer',
   opacity: disabled ? 0.55 : 1,
-  border: kind === 'secondary' ? '1px solid #1a2538' : 'none',
+  border: kind === 'secondary' ? '1px solid var(--card-border)' : 'none',
   backgroundColor:
-    kind === 'primary' ? C.accent : kind === 'danger' ? '#dc2626' : kind === 'success' ? '#475569' : C.card,
-  color: kind === 'secondary' ? C.textSoft : '#ffffff',
-  boxShadow: kind === 'primary' ? '0 4px 12px rgba(59, 130, 246, 0.25)' : 'none',
+    kind === 'primary' ? 'var(--btn-primary-bg)' : kind === 'danger' ? 'var(--danger)' : kind === 'success' ? 'var(--success)' : 'var(--accent-green-dim)',
+  color: kind === 'primary' ? 'var(--btn-primary-text)' : kind === 'secondary' ? 'var(--text-primary)' : '#ffffff',
+  boxShadow: kind === 'primary' ? '0 4px 12px var(--accent-glow)' : 'none',
+  transition: 'all 0.2s ease',
 });
 
 const toDate = (iso: string) => new Date(`${iso}T00:00:00Z`);

@@ -12,6 +12,7 @@ namespace ProSim.Api.Data
 
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Subscriber> Subscribers { get; set; } = null!;
+        public DbSet<Employee> Employees { get; set; } = null!;
         public DbSet<SimCard> SimCards { get; set; } = null!;
         public DbSet<RegistrationApplication> RegistrationApplications { get; set; } = null!;
 
@@ -19,6 +20,7 @@ namespace ProSim.Api.Data
         public DbSet<UsageDaily> UsageDaily { get; set; } = null!;
         public DbSet<CallEvent> CallEvents { get; set; } = null!;
         public DbSet<MisuseAlert> MisuseAlerts { get; set; } = null!;
+        public DbSet<CdrImport> CdrImports { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

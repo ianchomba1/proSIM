@@ -20,12 +20,12 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onSuccess, onForgotPassw
     setError(null);
 
     if (!email.trim()) {
-      setError('Please enter your institutional email address.');
+      setError('Please enter your enterprise email address.');
       return;
     }
 
     if (!email.includes('@')) {
-      setError('Please enter a valid institutional email address (e.g., admin@university.edu).');
+      setError('Please enter a valid enterprise email address (e.g., admin@telecom.org).');
       return;
     }
 
@@ -55,10 +55,10 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onSuccess, onForgotPassw
         </div>
       )}
 
-      {/* Institutional Email Field */}
+      {/* Enterprise Email Field */}
       <div className="form-group">
         <label className="form-label" htmlFor="email-input">
-          Institutional Email
+          Enterprise Email
         </label>
         <div className="input-container">
           <Mail className="input-icon" size={18} />
@@ -66,7 +66,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onSuccess, onForgotPassw
             id="email-input"
             type="email"
             className="form-input"
-            placeholder="admin@university.edu"
+            placeholder="admin@telecom.org"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading}

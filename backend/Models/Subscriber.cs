@@ -35,6 +35,11 @@ namespace ProSim.Api.Models
         [Column("DateOfBirth")]
         public string? DateOfBirth { get; set; }
 
+        /// <summary>Work email, required when an administrator adds the employee (stored in lower case).</summary>
+        [MaxLength(150)]
+        [Column("Email")]
+        public string? Email { get; set; }
+
         [Required]
         [MaxLength(100)]
         [Column("Department")]

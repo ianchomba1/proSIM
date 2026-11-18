@@ -82,15 +82,21 @@ export async function registerApi(
   }
 }
 
+export type ApplicationStatus = "Pending" | "Approved" | "Rejected";
+
 export interface ApplicationItem {
   applicationId: string;
-  subscriberId: string;
-  simCardId?: string;
-  applicationStatus: string;
+  /** Set once the application is approved and the applicant is registered as a subscriber. */
+  subscriberId?: string | null;
+  /** Set once the application is approved and the SIM card is issued. */
+  simCardId?: string | null;
+  applicationStatus: ApplicationStatus;
   submissionDate: string;
-  reviewDate?: string;
-  reviewedBy?: string;
-  remarks?: string;
+  reviewDate?: string | null;
+  reviewedBy?: string | null;
+  reviewedByName?: string | null;
+  remarks?: string | null;
+  dateOfBirth?: string | null;
   fullName: string;
   institutionalId: string;
   nationalIdNumber?: string;
@@ -189,48 +195,60 @@ export async function submitApplicationApi(
   }
 }
 
-export async function fetchApplicationsApi(): Promise<ApplicationItem[]> {
+/** All applications (or only those with `status`), newest first. Throws with a readable message on failure. */
+export async function fetchApplicationsApi(status?: ApplicationStatus): Promise<ApplicationItem[]> {
+  let response: Response;
   try {
-    const response = await fetch(`${API_BASE_URL}/applications`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch applications: ${response.statusText}`);
-    }
-    return await response.json();
-  } catch (err) {
-    console.error("Fetch applications API error:", err);
-    return [];
+    response = await fetch(`${API_BASE_URL}/applications${status ? `?status=${status}` : ""}`);
+  } catch {
+    throw new Error("Could not connect to the backend server.");
   }
+  if (!response.ok) {
+    throw new Error(`Failed to load applications (${response.status}).`);
+  }
+  return await response.json();
 }
 
-export async function updateApplicationStatusApi(
-  id: string,
-  status: string,
-  remarks?: string,
-  reviewerUserId?: string
-): Promise<{ success: boolean; message: string }> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/applications/${id}/status`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status, remarks, reviewerUserId }),
-    });
+export interface ReviewResult {
+  success: boolean;
+  message: string;
+  application?: ApplicationItem;
+}
 
+async function postReview(path: string, body: object): Promise<ReviewResult> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/applications/${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
-      return {
-        success: false,
-        message: data.message || "Failed to update application status.",
-      };
+      return { success: false, message: data.message || `Request failed (${response.status}).` };
     }
     return data;
   } catch (err) {
-    console.error("Update status API error:", err);
-    return {
-      success: false,
-      message: "Could not connect to backend server.",
-    };
+    console.error("Application review API error:", err);
+    return { success: false, message: "Could not connect to the backend server." };
   }
 }
+
+/**
+ * Approve a pending application: the backend creates the SIM card (SimCards) and registers the applicant
+ * (Subscribers). Leave iccid / phone empty to have unique ones generated.
+ */
+export const approveApplicationApi = (
+  id: string,
+  opts: { iccid?: string; phone?: string; remarks?: string; reviewerUserId?: string }
+) =>
+  postReview(`${id}/approve`, {
+    iccid: opts.iccid || null,
+    phone: opts.phone || null,
+    remarks: opts.remarks || null,
+    reviewerUserId: opts.reviewerUserId || null,
+  });
+
+/** Reject a pending application. A reason is required. */
+export const rejectApplicationApi = (id: string, remarks: string, reviewerUserId?: string) =>
+  postReview(`${id}/reject`, { remarks, reviewerUserId: reviewerUserId || null });
 

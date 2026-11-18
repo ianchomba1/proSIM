@@ -36,7 +36,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
     }
 
     if (!email.trim() || !email.includes('@')) {
-      setError('Please enter a valid institutional email address.');
+      setError('Please enter a valid enterprise email address.');
       return;
     }
 
@@ -91,10 +91,10 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
         </div>
       </div>
 
-      {/* Institutional Email Field */}
+      {/* Enterprise Email Field */}
       <div className="form-group">
         <label className="form-label" htmlFor="signup-email">
-          Institutional Email
+          Enterprise Email
         </label>
         <div className="input-container">
           <Mail className="input-icon" size={18} />
@@ -102,7 +102,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
             id="signup-email"
             type="email"
             className="form-input"
-            placeholder="a.vance@university.edu"
+            placeholder="a.vance@telecom.org"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading}
@@ -160,11 +160,11 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
         {/* Strength Indicator */}
         {password && (
           <div style={{ marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#8c9cb0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--text-secondary)' }}>
               <span>Security level</span>
               <span style={{ color: strength.color, fontWeight: 600 }}>{strength.label}</span>
             </div>
-            <div style={{ height: '4px', background: '#172233', borderRadius: '2px', overflow: 'hidden' }}>
+            <div style={{ height: '4px', background: 'var(--card-bg-elevated)', border: '1px solid var(--card-border)', borderRadius: '2px', overflow: 'hidden' }}>
               <div style={{ width: `${strength.percent}%`, height: '100%', background: strength.color, transition: 'all 0.3s ease' }} />
             </div>
           </div>
@@ -188,7 +188,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
             disabled={isLoading}
           />
           {confirmPassword && confirmPassword === password && (
-            <div style={{ position: 'absolute', right: '14px', color: '#10b981', display: 'flex' }}>
+            <div style={{ position: 'absolute', right: '14px', color: 'var(--accent-green)', display: 'flex' }}>
               <CheckCircle2 size={16} />
             </div>
           )}
@@ -200,7 +200,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess }) => {
         {isLoading ? (
           <>
             <div className="spinner" />
-            <span>Creating Institutional Account...</span>
+            <span>Creating Enterprise Account...</span>
           </>
         ) : (
           <>

@@ -1,0 +1,287 @@
+{
+  "model_version": "2026-11-08-gen-v4",
+  "created": "2026-11-08T10:01:53",
+  "training_data": {
+    "source": "synthetic CDR data, generator v4 (synthetic_cdr_generator4.ipynb)",
+    "sim_days": 90000,
+    "sims": 1000,
+    "dates": [
+      "2025-01-01",
+      "2025-03-31"
+    ],
+    "misuse_share_of_days": 0.0667
+  },
+  "library_versions": {
+    "python": "3.14.0",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "joblib": "1.6.0"
+  },
+  "features": {
+    "all_in_order": [
+      "total_download_mb",
+      "total_upload_mb",
+      "total_mb",
+      "session_count",
+      "data_session_count",
+      "total_duration_s",
+      "max_session_mb",
+      "hotspot_flag_count",
+      "geo_flag_count",
+      "roaming_sessions",
+      "unique_towers",
+      "apn_public_count",
+      "offpeak_session_count",
+      "offpeak_mb",
+      "billed_mb",
+      "voice_minutes_used",
+      "sms_count",
+      "upload_share",
+      "offpeak_share",
+      "hotspot_share",
+      "public_apn_share",
+      "mb_per_session",
+      "billed_minus_used_mb",
+      "billed_to_used_ratio",
+      "total_mb_vs_baseline",
+      "total_mb_z",
+      "total_mb_vs_longterm",
+      "total_upload_mb_vs_baseline",
+      "total_upload_mb_z",
+      "total_upload_mb_vs_longterm",
+      "session_count_vs_baseline",
+      "session_count_z",
+      "session_count_vs_longterm",
+      "unique_towers_vs_baseline",
+      "unique_towers_z",
+      "unique_towers_vs_longterm",
+      "hotspot_flag_count_vs_baseline",
+      "hotspot_flag_count_z",
+      "hotspot_flag_count_vs_longterm",
+      "offpeak_mb_vs_baseline",
+      "offpeak_mb_z",
+      "offpeak_mb_vs_longterm",
+      "billed_mb_vs_baseline",
+      "billed_mb_z",
+      "billed_mb_vs_longterm",
+      "tier_professional",
+      "tier_manager",
+      "tier_support",
+      "calls",
+      "call_minutes",
+      "mean_call_s",
+      "short_call_share",
+      "long_call_share",
+      "offpeak_call_share",
+      "intl_call_share",
+      "new_call_share",
+      "repeat_call_share",
+      "sms",
+      "offpeak_sms_share",
+      "intl_sms_share",
+      "new_sms_share",
+      "repeat_sms_share",
+      "calls_vs_baseline",
+      "calls_vs_longterm",
+      "call_minutes_vs_baseline",
+      "call_minutes_vs_longterm",
+      "sms_vs_baseline",
+      "sms_vs_longterm"
+    ],
+    "data": [
+      "total_download_mb",
+      "total_upload_mb",
+      "total_mb",
+      "session_count",
+      "data_session_count",
+      "total_duration_s",
+      "max_session_mb",
+      "hotspot_flag_count",
+      "geo_flag_count",
+      "roaming_sessions",
+      "unique_towers",
+      "apn_public_count",
+      "offpeak_session_count",
+      "offpeak_mb",
+      "billed_mb",
+      "voice_minutes_used",
+      "sms_count",
+      "upload_share",
+      "offpeak_share",
+      "hotspot_share",
+      "public_apn_share",
+      "mb_per_session",
+      "billed_minus_used_mb",
+      "billed_to_used_ratio",
+      "total_mb_vs_baseline",
+      "total_mb_z",
+      "total_mb_vs_longterm",
+      "total_upload_mb_vs_baseline",
+      "total_upload_mb_z",
+      "total_upload_mb_vs_longterm",
+      "session_count_vs_baseline",
+      "session_count_z",
+      "session_count_vs_longterm",
+      "unique_towers_vs_baseline",
+      "unique_towers_z",
+      "unique_towers_vs_longterm",
+      "hotspot_flag_count_vs_baseline",
+      "hotspot_flag_count_z",
+      "hotspot_flag_count_vs_longterm",
+      "offpeak_mb_vs_baseline",
+      "offpeak_mb_z",
+      "offpeak_mb_vs_longterm",
+      "billed_mb_vs_baseline",
+      "billed_mb_z",
+      "billed_mb_vs_longterm",
+      "tier_professional",
+      "tier_manager",
+      "tier_support"
+    ],
+    "call_sms": [
+      "calls",
+      "call_minutes",
+      "mean_call_s",
+      "short_call_share",
+      "long_call_share",
+      "offpeak_call_share",
+      "intl_call_share",
+      "new_call_share",
+      "repeat_call_share",
+      "sms",
+      "offpeak_sms_share",
+      "intl_sms_share",
+      "new_sms_share",
+      "repeat_sms_share",
+      "calls_vs_baseline",
+      "calls_vs_longterm",
+      "call_minutes_vs_baseline",
+      "call_minutes_vs_longterm",
+      "sms_vs_baseline",
+      "sms_vs_longterm"
+    ]
+  },
+  "feature_settings": {
+    "raw_daily_columns": [
+      "total_download_mb",
+      "total_upload_mb",
+      "total_mb",
+      "session_count",
+      "data_session_count",
+      "total_duration_s",
+      "max_session_mb",
+      "hotspot_flag_count",
+      "geo_flag_count",
+      "roaming_sessions",
+      "unique_towers",
+      "apn_public_count",
+      "offpeak_session_count",
+      "offpeak_mb",
+      "billed_mb",
+      "voice_minutes_used",
+      "sms_count"
+    ],
+    "baseline_columns": [
+      "total_mb",
+      "total_upload_mb",
+      "session_count",
+      "unique_towers",
+      "hotspot_flag_count",
+      "offpeak_mb",
+      "billed_mb"
+    ],
+    "tiers": [
+      "professional",
+      "manager",
+      "support"
+    ],
+    "baseline_window_days": 14,
+    "min_history_days": 3,
+    "long_term_baseline": "median of ALL earlier days of the same SIM",
+    "new_number": "a destination this SIM never called or texted on any earlier day",
+    "code": "build_features() and build_call_features() in ml-training/notebooks/01_misuse_training.ipynb"
+  },
+  "history_needed_to_score_one_day": "the SIM's earlier daily rows (14 days for the 14-day baselines, all earlier days for the long-term baselines), its earlier call/SMS destinations (for new-number shares), and its raw Isolation Forest scores for the 2 previous days (for the 3-day average)",
+  "models": {
+    "random_forest": {
+      "file": "random_forest.joblib",
+      "features": "all_in_order",
+      "classes": [
+        "bulk_sms",
+        "call_abuse",
+        "data_reselling",
+        "ghost_usage",
+        "inactive_billing",
+        "normal",
+        "sim_box",
+        "unauthorized_sharing"
+      ],
+      "params": {
+        "n_estimators": 400,
+        "max_depth": null,
+        "min_samples_leaf": 5,
+        "class_weight": "balanced_subsample"
+      },
+      "output": "predicted class; misuse score = 1 - P(normal)"
+    },
+    "data_isolation_forest": {
+      "file": "data_isolation_forest.joblib",
+      "features": "data",
+      "params": {
+        "n_estimators": 300,
+        "max_samples": 4096,
+        "max_features": 0.5
+      },
+      "score": "-score_samples(x), then the mean of the SIM's scores today and on the previous 2 days",
+      "smooth_window_days": 3,
+      "thresholds": {
+        "unusual": 0.39512985683746144,
+        "strict_review": 0.4437451057605998
+      },
+      "budgets": {
+        "unusual": 0.0667,
+        "strict_review": 0.02
+      }
+    },
+    "call_sms_isolation_forest": {
+      "file": "call_sms_isolation_forest.joblib",
+      "features": "call_sms",
+      "params": {
+        "n_estimators": 300,
+        "max_samples": 4096,
+        "max_features": 1.0
+      },
+      "score": "-score_samples(x), then the mean of the SIM's scores today and on the previous 2 days",
+      "smooth_window_days": 3,
+      "thresholds": {
+        "review": 0.4898657810443883
+      },
+      "budgets": {
+        "review": 0.01
+      }
+    }
+  },
+  "alert_rules": [
+    {
+      "level": "High",
+      "when": "Random Forest predicts misuse AND data IF score >= unusual threshold",
+      "shows": "misuse type from the Random Forest"
+    },
+    {
+      "level": "Alert",
+      "when": "Random Forest predicts misuse",
+      "shows": "misuse type from the Random Forest"
+    },
+    {
+      "level": "Review",
+      "when": "Random Forest predicts normal AND data IF score >= strict_review threshold",
+      "shows": "unusual data use, type unknown"
+    },
+    {
+      "level": "Review (calls/SMS)",
+      "when": "Random Forest predicts normal AND call/SMS IF score >= review threshold",
+      "shows": "unusual calling/SMS, type unknown"
+    }
+  ]
+}

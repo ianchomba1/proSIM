@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from 'lucide-react';
+import { loginApi } from '../services/api';
 
 interface SignInFormProps {
-  onSuccess: (email: string) => void;
+  onSuccess: (email: string, name?: string, role?: string, id?: string) => void;
   onForgotPassword: () => void;
 }
 
@@ -14,7 +15,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onSuccess, onForgotPassw
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -35,11 +36,14 @@ export const SignInForm: React.FC<SignInFormProps> = ({ onSuccess, onForgotPassw
 
     setIsLoading(true);
 
-    // Simulate API sign-in delay
-    setTimeout(() => {
-      setIsLoading(false);
-      onSuccess(email);
-    }, 1000);
+    const res = await loginApi(email, password);
+    setIsLoading(false);
+
+    if (res.success) {
+      onSuccess(res.user?.email || email, res.user?.fullName || email.split('@')[0], res.user?.role || 'Customer', res.user?.id);
+    } else {
+      setError(res.message);
+    }
   };
 
   return (

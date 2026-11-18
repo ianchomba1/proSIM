@@ -24,3 +24,17 @@ dist-ssr
 *.sw?
 # Agent skills and configurations
 .agents/
+
+# Python ML service
+ml-service/.venv/
+__pycache__/
+*.pyc
+
+# .NET build output
+backend/bin/
+backend/obj/
+
+# ML training: raw data and trained model files (regenerate from the notebook)
+ml-training/data/
+ml-service/models/
+.ipynb_checkpoints/

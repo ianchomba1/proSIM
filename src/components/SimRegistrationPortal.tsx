@@ -12,12 +12,14 @@ import {
   Check,
   AlertCircle,
   Upload,
+  Camera,
   XCircle,
   Sun,
   Moon
 } from 'lucide-react';
 import { submitApplicationApi, verifyNationalIdApi } from '../services/api';
 import { useIsMobile } from '../hooks/useMediaQuery';
+import { IdCameraCapture } from './IdCameraCapture';
 import type { IdVerificationResult } from '../services/api';
 
 interface SimRegistrationPortalProps {
@@ -100,13 +102,30 @@ export const SimRegistrationPortal: React.FC<SimRegistrationPortalProps> = ({
     setCurrentStep(2);
   };
 
+  // The ID photo comes from the in-page camera (Take a photo) or from a file (Upload a photo).
+  const [cameraOpen, setCameraOpen] = useState(false);
+  const uploadInputRef = React.useRef<HTMLInputElement>(null);
+  const cameraInputRef = React.useRef<HTMLInputElement>(null);
+
+  const openCamera = () => {
+    setVerificationError('');
+    // In-page camera where the browser offers one (HTTPS or localhost); otherwise the phone's own camera app.
+    // (navigator.mediaDevices is missing on plain-HTTP pages, whatever the TypeScript types say)
+    if (typeof navigator.mediaDevices?.getUserMedia === 'function') setCameraOpen(true);
+    else cameraInputRef.current?.click();
+  };
+
   const handleIdImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
+    e.target.value = '';   // choosing the same file again still fires onChange
+    if (file) acceptIdFile(file);
+  };
+
+  const acceptIdFile = (file: File) => {
     setIdResult(null);
     setVerificationError('');
-    if (!file) { setIdImage(null); setIdPreview(null); return; }
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      setVerificationError('Please upload a JPG, PNG or WEBP photo of your National ID.');
+      setVerificationError('Please use a JPG, PNG or WEBP photo of your National ID.');
       return;
     }
     if (file.size > 8 * 1024 * 1024) {
@@ -121,7 +140,7 @@ export const SimRegistrationPortal: React.FC<SimRegistrationPortalProps> = ({
     e.preventDefault();
     if (verificationToken) { setCurrentStep(3); return; }
     if (!idImage) {
-      setVerificationError('Please upload a photo of your National ID.');
+      setVerificationError('Please take or upload a photo of your National ID.');
       return;
     }
     setVerificationError('');
@@ -667,7 +686,7 @@ export const SimRegistrationPortal: React.FC<SimRegistrationPortalProps> = ({
 
                     <div style={{ background: 'var(--card-bg-elevated)', border: '1px solid var(--card-border)', borderRadius: '10px', padding: '16px 20px', marginBottom: '24px' }}>
                       <div style={{ fontSize: '13.5px', color: 'var(--text-primary)', fontWeight: 600, marginBottom: '4px' }}>
-                        Upload a photo of the front of your Kenyan National ID
+                        Take or upload a photo of the front of your Kenyan National ID
                       </div>
                       <div style={{ fontSize: '12.5px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                         Optical neural parsing matches the photo against the legal name, ID serial, and birth date entered. The image is processed in sovereign memory and never persisted.
@@ -675,36 +694,69 @@ export const SimRegistrationPortal: React.FC<SimRegistrationPortalProps> = ({
                     </div>
 
                     <div style={{ marginBottom: '20px' }}>
-                      <label
-                        htmlFor="national-id-upload"
+                      <div
                         style={{
                           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                          gap: '10px', minHeight: idPreview ? 'auto' : '150px', padding: '20px',
-                          border: '1.5px dashed var(--input-border)', borderRadius: '12px', cursor: 'pointer',
-                          backgroundColor: 'var(--input-bg)', color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'center',
-                          transition: 'all 0.2s ease'
+                          gap: '14px', minHeight: idPreview ? 'auto' : '150px', padding: '20px',
+                          border: '1.5px dashed var(--input-border)', borderRadius: '12px',
+                          backgroundColor: 'var(--input-bg)', color: 'var(--text-secondary)', fontSize: '13px', textAlign: 'center'
                         }}
                       >
                         {idPreview ? (
-                          <>
-                            <img src={idPreview} alt="Uploaded National ID" style={{ maxWidth: '100%', maxHeight: '220px', borderRadius: '8px', border: '1px solid var(--card-border)' }} />
-                            <span style={{ color: 'var(--accent-green)', fontWeight: 600, marginTop: '8px' }}>Choose a different photo</span>
-                          </>
+                          <img src={idPreview} alt="Your National ID" style={{ maxWidth: '100%', maxHeight: '220px', borderRadius: '8px', border: '1px solid var(--card-border)' }} />
                         ) : (
-                          <>
-                            <Upload size={28} color="var(--accent-green)" />
-                            <span><strong style={{ color: 'var(--text-primary)' }}>Click to upload</strong> a JPG, PNG or WEBP (max 8 MB)</span>
-                          </>
+                          <span>Take a photo with your camera, or upload one you already have.<br />JPG, PNG or WEBP, max 8 MB.</span>
                         )}
-                      </label>
+                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center', width: isMobile ? '100%' : 'auto' }}>
+                          <button
+                            type="button"
+                            onClick={openCamera}
+                            style={{
+                              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flex: isMobile ? '1 1 100%' : '0 0 auto',
+                              padding: '11px 18px', borderRadius: '10px', border: 'none', cursor: 'pointer',
+                              background: 'var(--accent-green)', color: '#fff', fontSize: '13.5px', fontWeight: 600
+                            }}
+                          >
+                            <Camera size={17} /> {idPreview ? 'Retake photo' : 'Take a photo'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => uploadInputRef.current?.click()}
+                            style={{
+                              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flex: isMobile ? '1 1 100%' : '0 0 auto',
+                              padding: '11px 18px', borderRadius: '10px', cursor: 'pointer',
+                              background: 'transparent', border: '1px solid var(--input-border)', color: 'var(--text-primary)', fontSize: '13.5px', fontWeight: 600
+                            }}
+                          >
+                            <Upload size={17} /> {idPreview ? 'Upload a different photo' : 'Upload a photo'}
+                          </button>
+                        </div>
+                      </div>
+                      {/* Upload: the file picker (on phones also offers the gallery) */}
                       <input
+                        ref={uploadInputRef}
                         id="national-id-upload"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        onChange={handleIdImageChange}
+                        style={{ display: 'none' }}
+                      />
+                      {/* Fallback for browsers without in-page camera access: opens the phone's camera app */}
+                      <input
+                        ref={cameraInputRef}
                         type="file"
                         accept="image/jpeg,image/png,image/webp"
                         capture="environment"
                         onChange={handleIdImageChange}
                         style={{ display: 'none' }}
                       />
+                      {cameraOpen && (
+                        <IdCameraCapture
+                          onCapture={(file) => { setCameraOpen(false); acceptIdFile(file); }}
+                          onClose={() => setCameraOpen(false)}
+                          onUnavailable={(message) => { setCameraOpen(false); setVerificationError(message); }}
+                        />
+                      )}
                     </div>
 
                     {idResult?.checks && (

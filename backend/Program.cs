@@ -45,10 +45,18 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
+        // Local dev sites, plus the hosted frontend's address(es) from Cors:AllowedOrigins
+        // (comma-separated; on Azure set the environment variable Cors__AllowedOrigins).
+        var allowedOrigins = (builder.Configuration["Cors:AllowedOrigins"] ?? "")
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(o => o.TrimEnd('/'))
+            .ToArray();
+
         policy.SetIsOriginAllowed(origin =>
               {
                   var uri = new Uri(origin);
-                  return uri.Host == "localhost" || uri.Host == "127.0.0.1";
+                  return uri.Host == "localhost" || uri.Host == "127.0.0.1"
+                      || allowedOrigins.Contains(origin.TrimEnd('/'), StringComparer.OrdinalIgnoreCase);
               })
               .AllowAnyHeader()
               .AllowAnyMethod()

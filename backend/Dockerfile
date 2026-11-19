@@ -1,0 +1,14 @@
+# ProSIM API (ASP.NET Core 10). Build context: the backend folder.
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+COPY backend.csproj .
+RUN dotnet restore
+COPY . .
+RUN dotnet publish backend.csproj -c Release -o /app --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
+WORKDIR /app
+COPY --from=build /app .
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "backend.dll"]
